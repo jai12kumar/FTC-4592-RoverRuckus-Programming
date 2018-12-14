@@ -1,0 +1,63 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+public class Robot4592 {
+	
+	public DcMotor frontLeft, frontRight, rearLeft, rearRight, leftUp, extendUp, extendOut;
+	public Servo flipUp, flipOut;
+	public CrServo leftIntake, rightIntake;
+	
+	HardwareMap hwMap;
+	
+	private Elapsedtime period = new ElapsedTime();
+	
+	public Robot4592() {
+	}
+	
+	public void init(HardwareMap ahwMap) {
+		hwMap = ahwMap;
+		 // Define and Initialize Motors
+		frontLeft = hwmap.get(DcMotor.class, "front_left");
+		frontLeft = hwmap.get(DcMotor.class, "front_right");
+		frontLeft = hwmap.get(DcMotor.class, "rear_Left");
+		frontLeft = hwmap.get(DcMotor.class, "rear_right");
+
+		frontLeft.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        rearLeft.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+		rearRight.setDirection(DcMotor.Direction.FORWARD);
+		
+		// Set to FORWARD if using AndyMark motors
+        // Set all motors to zero power
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        rearLeft.setPower(0);
+        rearRight.setPower(0);
+
+        
+        // Use RUN_USING_ENCODERS if encoders are installed.
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        rearRight.setMode(DcMotor.RunMode.RUN_UNSING_ENCODER);
+		
+		public void waitForTick(long periodMs) {
+
+        long  remaining = periodMs - (long)period.milliseconds();
+
+        // sleep for the remaining portion of the regular cycle period.
+        if (remaining > 0) {
+            try {
+                Thread.sleep(remaining);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // Reset the cycle clock for the next pass.
+        period.reset();
+    }
+}
